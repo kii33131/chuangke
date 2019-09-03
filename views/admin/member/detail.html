@@ -1,0 +1,154 @@
+{extend name="public:form" /}
+{block name="menu"}创客详情{/block}
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+<link href="__PLUGINS__/js/zoomify/zoomify.min.css" rel="stylesheet">
+<style>
+    .picture{
+        height: 100px;
+        border: 1px solid #e2e2e2;
+        cursor: pointer;
+
+    }
+    .layui-laydate-content>.layui-laydate-list {
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+    .layui-laydate-content>.layui-laydate-list>li{
+        width:50%
+    }
+
+    .merge-box .scrollbox .merge-list {
+        padding-bottom: 5px;
+    }
+    .btn-default,.btn-default:focus {
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    .id_card>div{
+        margin-top: 10px;
+    }
+    #exhibition_block>div{
+        position: relative;
+        display: inline-block;
+        margin: 5px;
+    }
+    #exhibition_block>div>img{
+        height: 100px;
+    }
+    #exhibition_block>div>.layui-icon-close{
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-weight: 800;
+    }
+    .none{
+        display: none;
+    }
+    .layui-disabled{
+        color: #676767!important;
+    }
+</style>
+
+{/block}
+{block name="form"}
+<div class="row layui-form">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$member->name}">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">所属城市</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$member->province}{$member->city}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创客编号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$member->number}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">行业</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$channel['name']}">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">地址</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$member->address}">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">电话</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$member->mobile}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">身份证</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$member->cart_id}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">卡号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$bank['number']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">银行</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$bank['bank_name']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">支行</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$bank['sub_branch']}">
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script type="text/javascript" src="__PLUGINS__/js/zoomify/zoomify.min.js"></script>
+{/block}
+{block name="submit"}
+
+{/block}

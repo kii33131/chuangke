@@ -1,0 +1,29 @@
+{extend name="public:form" /}
+{block name="menu"}修改服务费率{/block}
+{block name='action'}{:url('Business/edit')}{/block}
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+{/block}
+{block name="form"}
+<div class="row layui-form">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">服务费率</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" name="rate" required value="{$business->rate}">
+            </div>
+        </div>
+    </div>
+
+</div>
+<input type="hidden" name="id" value="{$business->sid}">
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script>
+
+
+</script>
+{/block}
+{block name="submit"}
+<button class="btn btn-primary" type="submit">保存</button>
+
+{/block}

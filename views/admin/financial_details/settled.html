@@ -1,0 +1,35 @@
+{extend name="financial_details:base" /}
+{block name="table-head"}
+    <tr>
+        <th>门店名称</th>
+        <th>入驻金额</th>
+        <th>入驻时间</th>
+        <th>推荐人</th>
+    </tr>
+{/block}
+{block name="table-body"}
+    {if condition="!$list->count()"}
+        <tr>
+            <td colspan="4" class="text-center">没有数据</td>
+        </tr>
+    {else/}
+        {foreach $list as $key => $val}
+            <tr>
+                <td>{$val->name}</td>
+                <td>{$val->entry_fee}元</td>
+                <td>{$val->entry_time}</td>
+                <td>{$val->recommender->name ?? ''}</td>
+            </tr>
+        {/foreach}
+    {/if}
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script>
+    layui.use(['form','layer'],function () {
+        var form = layui.form;
+        form.on('select(filter)',function (data) {
+            var url = $(data.elem).find("option:selected").attr("data-url");
+            location.href = url;
+        });
+    });
+</script>
+{/block}

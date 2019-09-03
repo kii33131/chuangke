@@ -1,0 +1,35 @@
+{extend name="public:base" /}
+{block name="menu"}发票科目{/block}
+{block name="search"}
+{:createButton(url('create'), '新增')}
+{/block}
+{block name="table-head"}
+    <tr>
+        <th>id</th>
+        <th>科目名</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+{/block}
+{block name="table-body"}
+
+{if condition="!$SubjectList->count()"}
+<tr>
+    <td colspan="5" class="text-center">没有数据</td>
+</tr>
+{else/}
+{foreach $SubjectList as $key => $helpcenter}
+<tr>
+    <td>{$helpcenter->id}</td>
+    <td>{$helpcenter->name}</td>
+    <td>{$helpcenter->created_at}</td>
+    <td>
+        {:deleteButton(url('Subject/delete'), $helpcenter->id)}
+    </td>
+</tr>
+{/foreach}
+{/if}
+{/block}
+{block name="paginate"}
+{$SubjectList->render()|raw}
+{/block}

@@ -1,0 +1,38 @@
+{extend name="public:base" /}
+{block name="menu"}渠道{/block}
+{block name="search"}
+{:createButton(url('create'), '新增')}
+{/block}
+{block name="table-head"}
+    <tr>
+        <th>id</th>
+        <th>行业名</th>
+        <th>创建时间</th>
+        <th>行业码</th>
+        <th>操作</th>
+    </tr>
+{/block}
+{block name="table-body"}
+
+{if condition="!$ChannelList->count()"}
+<tr>
+    <td colspan="5" class="text-center">没有数据</td>
+</tr>
+{else/}
+{foreach $ChannelList as $key => $helpcenter}
+<tr>
+    <td>{$helpcenter->id}</td>
+    <td>{$helpcenter->name}</td>
+    <td>{$helpcenter->created_at}</td>
+    <td>{$helpcenter->code}</td>
+
+    <td>
+        {:deleteButton(url('Channel/delete'), $helpcenter->id)}
+    </td>
+</tr>
+{/foreach}
+{/if}
+{/block}
+{block name="paginate"}
+{$ChannelList->render()|raw}
+{/block}

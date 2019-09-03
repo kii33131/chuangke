@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--startprint-->
+
+<table border="1">
+    <tr>
+        <td>这个表格将会被打印</td>
+        <td>这个表格将会被打印</td>
+        <td>这个表格将会被打印</td>
+    </tr>
+</table>
+<br>
+<img src="http://pic31.nipic.com/20130801/11604791_100539834000_2.jpg" alt="这张图片将会被打印">
+<!--endprint-->
+<button  onclick="doPrint()">打印</button>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+    function doPrint() {
+        bdhtml=window.document.body.innerHTML;
+        sprnstr="<!--startprint-->"; //开始打印标识字符串有17个字符
+        eprnstr="<!--endprint-->"; //结束打印标识字符串
+        prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17); //从开始打印标识之后的内容
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+        window.document.body.innerHTML=prnhtml; //把需要打印的指定内容赋给body.innerHTML
+        window.print(); //调用浏览器的打印功能打印指定区域
+        window.document.body.innerHTML=bdhtml; // 最后还原页面
+    }
+</script>
+</html>

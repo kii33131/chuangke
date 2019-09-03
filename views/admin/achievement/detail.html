@@ -1,0 +1,192 @@
+{extend name="public:form" /}
+{block name="menu"}结算单详情{/block}
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+<link href="__PLUGINS__/js/zoomify/zoomify.min.css" rel="stylesheet">
+<style>
+    .picture{
+        height: 100px;
+        border: 1px solid #e2e2e2;
+        cursor: pointer;
+
+    }
+    .layui-laydate-content>.layui-laydate-list {
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+    .layui-laydate-content>.layui-laydate-list>li{
+        width:50%
+    }
+
+    .merge-box .scrollbox .merge-list {
+        padding-bottom: 5px;
+    }
+    .btn-default,.btn-default:focus {
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    .id_card>div{
+        margin-top: 10px;
+    }
+    #exhibition_block>div{
+        position: relative;
+        display: inline-block;
+        margin: 5px;
+    }
+    #exhibition_block>div>img{
+        height: 100px;
+    }
+    #exhibition_block>div>.layui-icon-close{
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-weight: 800;
+    }
+    .none{
+        display: none;
+    }
+    .layui-disabled{
+        color: #676767!important;
+    }
+</style>
+
+{/block}
+{block name="form"}
+<div class="row layui-form">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">结算单号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['number']}">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">业务单号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['task_number']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">业务名称</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['task_name']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">佣金</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['commission']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业实际付款</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['pt_money']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创客姓名</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['name']}">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">业绩完成日期</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['created_at']}">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">选择技术服务费支付方</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{if $settlementDetail['service_pay_type']==1} 企业支付 {elseif $settlementDetail['service_pay_type']==2} 创客支付 {else} 共同支付{/if}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">技术服务费</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['service_money']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创客支付</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['member_pay']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业支付</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['business_pay']}">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">开票类型</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{if $settlementDetail['invoice_type']==1}  众包 {else} 委托{/if}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">会计科目</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['accounting_subjects']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">二级科目</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="account"  readonly required value="{$settlementDetail['accounting_subjects_son']}">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script type="text/javascript" src="__PLUGINS__/js/zoomify/zoomify.min.js"></script>
+{/block}
+{block name="submit"}
+
+{/block}

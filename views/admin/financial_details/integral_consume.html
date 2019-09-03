@@ -1,0 +1,37 @@
+{extend name="financial_details:base" /}
+{block name="table-head"}
+    <tr>
+        <th>门店名称</th>
+        <th>积分消耗</th>
+        <th>剩余积分</th>
+        <th>消费时间</th>
+        <th>消费方式</th>
+    </tr>
+{/block}
+{block name="table-body"}
+    {if condition="!$list->count()"}
+        <tr>
+            <td colspan="5" class="text-center">没有数据</td>
+        </tr>
+    {else/}
+        {foreach $list as $key => $val}
+            <tr>
+                <td>{$val->name}</td>
+                <td>{$val->integral}</td>
+                <td>{$val->residual_integral}</td>
+                <td>{$val->create_time}</td>
+                <td>{$val['mode']}</td>
+            </tr>
+        {/foreach}
+    {/if}
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script>
+    layui.use(['form','layer'],function () {
+        var form = layui.form;
+        form.on('select(filter)',function (data) {
+            var url = $(data.elem).find("option:selected").attr("data-url");
+            location.href = url;
+        });
+    });
+</script>
+{/block}

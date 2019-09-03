@@ -1,0 +1,200 @@
+{extend name="public:form" /}
+{block name="menu"}查看企业信息{/block}
+
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+<link href="__PLUGINS__/js/zoomify/zoomify.min.css" rel="stylesheet">
+<style>
+    .picture{
+        height: 100px;
+        border: 1px solid #e2e2e2;
+        cursor: pointer;
+
+    }
+    .layui-laydate-content>.layui-laydate-list {
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+    .layui-laydate-content>.layui-laydate-list>li{
+        width:50%
+    }
+
+    .merge-box .scrollbox .merge-list {
+        padding-bottom: 5px;
+    }
+    .btn-default,.btn-default:focus {
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    .id_card>div{
+        margin-top: 10px;
+    }
+    #exhibition_block>div{
+        position: relative;
+        display: inline-block;
+        margin: 5px;
+    }
+    #exhibition_block>div>img{
+        height: 100px;
+    }
+    #exhibition_block>div>.layui-icon-close{
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-weight: 800;
+    }
+    .none{
+        display: none;
+    }
+    .layui-disabled{
+        color: #676767!important;
+    }
+</style>
+
+{/block}
+{block name='action'}{:url('create')}{/block}
+{block name="form"}
+<div class="row layui-form">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业名称</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="name" readonly value="{$business->name}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业简称</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="abbreviation" readonly value="{$business->abbreviation}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">纳税人识别号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="taxpayer" readonly value="{$business->taxpayer}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业执照</label>
+            <div class="col-sm-8">
+                <img src="__UPLOADS__/{$business['license']}" class="picture" id="icon_img">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业注册地址</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="address" readonly value="{$business->address}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业联系人姓名</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="contacts" readonly value="{$business->contacts}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业人联系电话</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="contacts_mobile" readonly value="{$business->contacts_mobile}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业注册电话</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="business_mobile" readonly value="{$business->business_mobile}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">法人姓名</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="legal_person" readonly value="{$business->legal_person}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">法人身份证号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="legal_person_id" readonly value="{$business->legal_person_id}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">身份证正面</label>
+
+            <div class="col-sm-8">
+                <img src="__UPLOADS__/{$business['id_img_frontal']}" class="picture" id="icon_img1">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">身份证反面</label>
+            <div class="col-sm-8">
+                <img src="__UPLOADS__/{$business['id_img_back']}" class="picture" id="icon_img2">
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">基本开户银行</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="bank_name" readonly value="{$business->bank_name}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">支行</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="subbranch_name" readonly value="{$business->subbranch_name}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">帐号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="card_number" readonly value="{$business->card_number}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">开户地址</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="bank_address" readonly value="{$business->bank_address}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业开户许可证</label>
+            <div class="col-sm-8">
+                <img src="__UPLOADS__/{$business['open_permit']}" class="picture" id="icon_img3">
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script type="text/javascript" src="__PLUGINS__/js/zoomify/zoomify.min.js"></script>
+{/block}
+
+{block name="submit"}
+
+{/block}

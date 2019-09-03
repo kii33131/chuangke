@@ -1,0 +1,143 @@
+{extend name="public:form" /}
+{block name="menu"}业务单详情{/block}
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+<link href="__PLUGINS__/js/zoomify/zoomify.min.css" rel="stylesheet">
+<style>
+    .picture{
+        height: 100px;
+        border: 1px solid #e2e2e2;
+        cursor: pointer;
+
+    }
+    .layui-laydate-content>.layui-laydate-list {
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+    .layui-laydate-content>.layui-laydate-list>li{
+        width:50%
+    }
+
+    .merge-box .scrollbox .merge-list {
+        padding-bottom: 5px;
+    }
+    .btn-default,.btn-default:focus {
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    .id_card>div{
+        margin-top: 10px;
+    }
+    #exhibition_block>div{
+        position: relative;
+        display: inline-block;
+        margin: 5px;
+    }
+    #exhibition_block>div>img{
+        height: 100px;
+    }
+    #exhibition_block>div>.layui-icon-close{
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-weight: 800;
+    }
+    .none{
+        display: none;
+    }
+    .layui-disabled{
+        color: #676767!important;
+    }
+</style>
+
+{/block}
+
+{block name="table-head"}
+<tr>
+    <th>提交时间</th>
+    <th>执行日期</th>
+    <th>
+        完成度情况
+    </th>
+    <th>申请依据</th>
+</tr>
+{/block}
+
+{block name="table-body"}
+{foreach $memberschedule as $key => $schedule}
+<tr>
+    <td>{$schedule['created_at']}</td>
+    <td>{$schedule['start_time']}-{$schedule['end_time']}</td>
+    <td>{$schedule['completion_degree']}</td>
+    <td>{$schedule['created_at']}</td>
+</tr>
+{/foreach}
+
+{block name="form"}
+<!--startprint-->
+<div class="row layui-form">
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">业务单号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$dateil['number']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">业务说明</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$dateil['name']}">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创客名</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['name']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">业绩提交时间</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['created_at']}">
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script type="text/javascript" src="__PLUGINS__/js/zoomify/zoomify.min.js"></script>
+<script>
+    function doPrint() {
+        bdhtml=window.document.body.innerHTML;
+        sprnstr="<!--startprint-->"; //开始打印标识字符串有17个字符
+        eprnstr="<!--endprint-->"; //结束打印标识字符串
+        prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17); //从开始打印标识之后的内容
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+        window.document.body.innerHTML=prnhtml; //把需要打印的指定内容赋给body.innerHTML
+        window.print(); //调用浏览器的打印功能打印指定区域
+        window.document.body.innerHTML=bdhtml; // 最后还原页面
+    }
+</script>
+{/block}
+
+{block name="submit"}
+<button  onclick="doPrint()">打印</button>
+
+{/block}
+
+

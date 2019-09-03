@@ -1,0 +1,420 @@
+{extend name="public:form" /}
+{block name="menu"}添加企业{/block}
+
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+<link href="__PLUGINS__/js/zoomify/zoomify.min.css" rel="stylesheet">
+<style>
+    .picture{
+        height: 100px;
+        border: 1px solid #e2e2e2;
+        cursor: pointer;
+
+    }
+    .layui-laydate-content>.layui-laydate-list {
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+    .layui-laydate-content>.layui-laydate-list>li{
+        width:50%
+    }
+
+    .merge-box .scrollbox .merge-list {
+        padding-bottom: 5px;
+    }
+    .btn-default,.btn-default:focus {
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    .id_card>div{
+        margin-top: 10px;
+    }
+    #exhibition_block>div{
+        position: relative;
+        display: inline-block;
+        margin: 5px;
+    }
+    #exhibition_block>div>img{
+        height: 100px;
+    }
+    #exhibition_block>div>.layui-icon-close{
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-weight: 800;
+    }
+    .none{
+        display: none;
+    }
+    .layui-disabled{
+        color: #676767!important;
+    }
+</style>
+
+{/block}
+{block name='action'}{:url('create')}{/block}
+{block name="form"}
+<div class="row layui-form">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业名称</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="name" required value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业简称</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="abbreviation" required value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">纳税人识别号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="taxpayer" required value="">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业执照</label>
+            <div class="col-sm-8">
+                <img src="__IMG__/add.jpg" class="picture" id="icon_img">
+                <input   type="file" name="license" style="display: none;" id="icon_input">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业注册地址</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="address" required value="">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业联系人姓名</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="contacts" required value="">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业人联系电话</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="contacts_mobile" required value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业注册电话</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="business_mobile" required value="">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">法人姓名</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="legal_person" required value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">法人身份证号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="legal_person_id" required value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">身份证正面</label>
+
+            <div class="col-sm-8">
+                <img src="__IMG__/add.jpg" class="picture" id="icon_img1">
+                <input   type="file" name="id_img_frontal" style="display: none;" id="icon_input1">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">身份证反面</label>
+            <div class="col-sm-8">
+                <img src="__IMG__/add.jpg" class="picture" id="icon_img2">
+                <input   type="file" name="id_img_back" style="display: none;" id="icon_input2">
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">基本开户银行</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="bank_name" required value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">支行</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="subbranch_name" required value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">帐号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="card_number" required value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">开户地址</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="bank_address" required value="">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业开户许可证</label>
+            <div class="col-sm-8">
+                <img src="__IMG__/add.jpg" class="picture" id="icon_img3">
+                <input   type="file" name="open_permit" style="display: none;" id="icon_input3">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">所需发票类型</label>
+            <div class="col-sm-8">
+                <div class="layui-input-inline">
+                    <input type="radio" name="invoice_type" value="1" title="增值税普通发票"  lay-filter="pattern">
+                    <input type="radio" name="invoice_type" value="2" title="增值税专用发票"  lay-filter="pattern">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">技术服务费</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" name="rate" required value="" placeholder="技术服务费总佣金百分比">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">服务方式</label>
+            <div class="col-sm-8">
+                <div class="layui-input-inline">
+                    <input type="radio" name="type" value="1" title="b2b"  lay-filter="pattern">
+                    <input type="radio" name="type" value="2" title="b2c"  lay-filter="pattern">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+</div>
+
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script type="text/javascript" src="__PLUGINS__/js/zoomify/zoomify.min.js"></script>
+<script>
+    var form,province,city,district;
+    var select_province = 'xx';
+    var select_city = '22';
+    var select_district = '33';
+    var is_first_select = true;
+    layui.use(['laydate','form','layer','upload'],function () {
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+        var upload = layui.upload;
+        form = layui.form;
+        var loadding_index = '';
+        $('.pass').click(function () {
+            id = $(this).attr('data');
+            url = $(this).attr('data-url')
+            var index = layer.confirm('确认通过？', {
+                btn: ['确认','取消'] //按钮
+            }, function(){
+                layer.close(index)
+                $.post(url, {id:id}, function (response) {
+                    if (!response.code) {
+                        warning(response.msg)
+                    } else {
+                        success(response.msg)
+                        setTimeout(function(){
+                            window.location.href = response.url
+                        }, response.wait * 1000);
+                    }
+                })
+            });
+        });
+        $('.refuse').click(function () {
+            id = $(this).attr('data');
+            url = $(this).attr('data-url');
+            layer.prompt({
+                formType: 2,
+                value: '',
+                title: '请输入拒绝原因',
+                area: ['300px', '200px'] //自定义文本域宽高
+            }, function(value, index, elem){
+                alert(value); //得到value
+                layer.close(index);
+                $.post(url, {id:id,msg:value}, function (response) {
+                    if (!response.code) {
+                        warning(response.msg);
+                    } else {
+                        success(response.msg);
+                        setTimeout(function(){
+                            window.location.href = response.url
+                        }, response.wait * 1000);
+                    }
+                })
+            });
+        });
+
+
+        //门店类型二级联动
+
+        //首次触发门店类型事件
+        //获取地区数据
+        $.get("__JSON__/district.json",function(data){
+            province = data.result[0];
+            city = data.result[1];
+            district = data.result[2];
+            get_province();
+        });
+        //省份切换事件
+        form.on('select(province)',function (data) {
+            var id = $(data.elem).find("option:selected").attr("data-id");
+            toggle_province($('#province option:selected').data('id'));
+        });
+        //城市切换事件
+        form.on('select(city)',function (data) {
+            var id = $(data.elem).find("option:selected").attr("data-id");
+            var provinceid = $(data.elem).find("option:selected").attr("data-provinceid");
+            toggle_city(id,provinceid);
+        });
+        //获取省份
+        function get_province(){
+            let select_index = 0;
+            for (let x in province) {
+                let selected = '';
+                if(is_first_select && province[x].fullname == select_province){
+                    selected = 'selected';
+                    select_index = x;
+                }
+                $("#province").append('<option ' + selected + ' data-id="' + x + '" value="' + province[x].fullname + '">' + province[x].fullname + '</option>');
+            }
+            toggle_province(select_index);
+        }
+        //切换省份
+        function toggle_province(id) {
+            $("#city").html('');
+            $("#district").html('');
+            let i = province[id].cidx[0];
+            if(!city[i].hasOwnProperty('cidx')){
+                $("#city").append('<option data-id = "-1" data-provinceid="' + i + '"  value="' + province[id].fullname + '">' + province[id].fullname + '</option>');
+                toggle_city("-1",id);
+                return ;
+            }
+            let select_index = i;
+            for(;i<=province[id].cidx[1];i++){
+                let selected = '';
+                if(is_first_select &&  city[i].fullname == select_city){
+                    selected = 'selected';
+                    select_index = i;
+                }
+                $("#city").append('<option ' + selected + ' data-id="' + i + '"  value="' + city[i].fullname + '">' + city[i].fullname + '</option>');
+            }
+            toggle_city(select_index);
+            form.render('select');
+        }
+        //切换市区
+        function toggle_city(id,provinceid) {
+            $("#district").html('');
+            if(id == "-1"){
+                let i = province[provinceid].cidx[0];
+                for(;i<=province[provinceid].cidx[1];i++){
+                    let selected = '';
+                    if(is_first_select &&  city[i].fullname == select_district){
+                        selected = 'selected';
+                    }
+                    $("#district").append('<option ' + selected + ' data-id="' + i + '"  value="' + city[i].fullname + '">' + city[i].fullname + '</option>');
+                }
+            }else{
+                let i = city[id].cidx[0];
+                for(;i<=city[id].cidx[1];i++){
+                    let selected = '';
+                    if(is_first_select &&  district[i].fullname == select_district){
+                        selected = 'selected';
+                    }
+                    $("#district").append('<option ' + selected + ' data-id="' + i + '"  value="' + district[i].fullname + '">' + district[i].fullname + '</option>');
+                }
+            }
+            is_first_select = false;
+            form.render('select');
+        }
+        $('#icon_img').click(function () {
+            $('#icon_input').click();
+        });
+        $("#icon_input").on("change", function() {
+            var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+            if(objUrl) {
+                $("#icon_img").attr("src", objUrl); //将图片路径存入src中，显示出图片
+            }
+        });
+
+        $('#icon_img1').click(function () {
+            $('#icon_input1').click();
+        });
+        $("#icon_input1").on("change", function() {
+            var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+            if(objUrl) {
+                $("#icon_img1").attr("src", objUrl); //将图片路径存入src中，显示出图片
+            }
+        });
+
+        $('#icon_img2').click(function () {
+            $('#icon_input2').click();
+        });
+        $("#icon_input2").on("change", function() {
+            var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+            if(objUrl) {
+                $("#icon_img2").attr("src", objUrl); //将图片路径存入src中，显示出图片
+            }
+        });
+
+
+        $('#icon_img3').click(function () {
+            $('#icon_input3').click();
+        });
+        $("#icon_input3").on("change", function() {
+            var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+            if(objUrl) {
+                $("#icon_img3").attr("src", objUrl); //将图片路径存入src中，显示出图片
+            }
+        });
+        function getObjectURL(file) {
+            var url = null;
+            if(window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if(window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if(window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    });
+</script>
+{/block}

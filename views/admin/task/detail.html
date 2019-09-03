@@ -1,0 +1,112 @@
+{extend name="public:base" /}
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+<style>
+    td>img{
+        width:50px;
+        height:50px;
+    }
+    .form-search .layui-form-label{
+        width: auto;
+    }
+    .form-search button{
+        height: 38px;
+        margin-bottom: 5px;
+    }
+    .layui-form-item .layui-input-inline{
+        width: 150px;
+    }
+</style>
+{/block}
+
+{block name="menu"}业务单详情  <button  onclick="doPrint()">打印</button> {/block}
+
+
+{block name="search"}
+<!--startprint-->
+
+<div class="form-group layui-form form-search">
+    <div class="layui-inline">
+
+        <label class="layui-form-label">业务单号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number"  autocomplete="off" class="layui-input" value="{$dateil['number']}">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+
+        <label class="layui-form-label">业务说明</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number"  autocomplete="off" class="layui-input" value="{$dateil['name']}">
+        </div>
+    </div>
+
+
+    <div class="layui-inline">
+
+        <label class="layui-form-label">创客名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number"  autocomplete="off" class="layui-input" value="{$achievement['name']}">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+
+        <label class="layui-form-label">业绩提交时间</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number"  autocomplete="off" class="layui-input" value="{$achievement['created_at']}">
+        </div>
+    </div>
+
+</div>
+{/block}
+
+{block name="table-head"}
+<tr>
+    <th>提交时间</th>
+    <th>执行日期</th>
+    <th>
+        完成度情况
+    </th>
+    <th>申请依据</th>
+</tr>
+{/block}
+
+{block name="table-body"}
+{foreach $memberschedule as $key => $schedule}
+<tr>
+    <td>{$schedule['created_at']}</td>
+    <td>{$schedule['start_time']}-{$schedule['end_time']}</td>
+    <td>{$schedule['completion_degree']}</td>
+
+    <td>
+    {foreach $schedule['basis'] as  $v}
+    <img src="__UPLOADS__/{$v}" id="icon_img" class="layui-upload-img logo_img" style="height: 100px;width: 100px">
+    {/foreach}
+    </td>
+
+</tr>
+{/foreach}
+<!--endprint-->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    function doPrint() {
+        bdhtml=window.document.body.innerHTML;
+        sprnstr="<!--startprint-->"; //开始打印标识字符串有17个字符
+        eprnstr="<!--endprint-->"; //结束打印标识字符串
+        prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17); //从开始打印标识之后的内容
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+        window.document.body.innerHTML=prnhtml; //把需要打印的指定内容赋给body.innerHTML
+        window.print(); //调用浏览器的打印功能打印指定区域
+        window.document.body.innerHTML=bdhtml; // 最后还原页面
+    }
+</script>
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+{/block}
+
+
+
+{/block}
+
+

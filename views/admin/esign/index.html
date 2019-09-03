@@ -1,0 +1,64 @@
+{extend name="public:base" /}
+{block name="menu"}平台合同帐号信息管理{/block}
+{block name="search"}
+        <!--<div class="form-group">
+            <label for="name" class="sr-only">用户名</label>
+            <input type="text" name="name" placeholder="请输入用户名" id="name" class="form-control" value="{$Request.param.name}">
+        </div>
+        <div class="form-group">
+            <label for="email" class="sr-only">邮箱</label>
+            <input type="text" name="email" placeholder="请输入邮箱" id="email" class="form-control" value="{$Request.param.email}">
+        </div>
+        {:searchButton()}-->
+{/block}
+{block name="button-create"}
+    {:createButton(url('esign/create'), '新增')}
+{/block}
+{block name="table-head"}
+    <tr>
+        <th>ID</th>
+        <th>用户唯一标识</th>
+        <th>姓名</th>
+        <th>手机号码</th>
+        <th>身份证件号</th>
+        <th>机构唯一标识</th>
+        <th>机构名称</th>
+        <th>企业信用证件号</th>
+        <th>默认</th>
+        <th>操作</th>
+    </tr>
+{/block}
+{block name="table-body"}
+    {if condition="!$esigns->count()"}
+        <tr>
+            <td colspan="7" class="text-center">没有数据</td>
+        </tr>
+    {else/}
+        {foreach $esigns as $key => $esign}
+            <tr>
+                <td>{$start + $key}</td>
+                <td>{$esign->accounts_thirdpartyuserId}</td>
+                <td>{$esign->accounts_name}</td>
+                <td>{$esign->accounts_mobile}</td>
+                <td>{$esign->accounts_idnumber}</td>
+                <td>{$esign->org_thirdpartyuserId}</td>
+                <td>{$esign->org_name}</td>
+                <td>{$esign->org_idnumber}</td>
+                <td>
+                    {if $esign->is_default==1}
+                        是
+                    {else}
+                        否
+                    {/if}
+                </td>
+                <td>
+                    {:editButton(url('esign/edit', ['id' => $esign->id ]))}
+                    <!--{:deleteButton(url('esign/delete'), $esign->id)}-->
+                </td>
+            </tr>
+        {/foreach}
+    {/if}
+{/block}
+{block name="paginate"}
+    {$esigns->render()|raw}
+{/block}

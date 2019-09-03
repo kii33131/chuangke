@@ -1,0 +1,385 @@
+{extend name="public:form" /}
+{block name="menu"}票据详情{/block}
+
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+<link href="__PLUGINS__/js/zoomify/zoomify.min.css" rel="stylesheet">
+<style>
+    .picture{
+        height: 100px;
+        border: 1px solid #e2e2e2;
+        cursor: pointer;
+
+    }
+    .layui-laydate-content>.layui-laydate-list {
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+    .layui-laydate-content>.layui-laydate-list>li{
+        width:50%
+    }
+
+    .merge-box .scrollbox .merge-list {
+        padding-bottom: 5px;
+    }
+    .btn-default,.btn-default:focus {
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    .id_card>div{
+        margin-top: 10px;
+    }
+    #exhibition_block>div{
+        position: relative;
+        display: inline-block;
+        margin: 5px;
+    }
+    #exhibition_block>div>img{
+        height: 100px;
+    }
+    #exhibition_block>div>.layui-icon-close{
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-weight: 800;
+    }
+    .none{
+        display: none;
+    }
+    .layui-disabled{
+        color: #676767!important;
+    }
+</style>
+
+{/block}
+
+{block name="form"}
+<!--startprint-->
+
+<div class="row layui-form">
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">票据单号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['pj_number']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">业务单号</label>
+            <div class="col-sm-6">
+                <a href="{:url('Task/detail',['tid'=>$achievement['tid'],'id'=>$achievement['id']])}">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['tnumber']}">
+
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">结算单号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['anumber']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">合同编号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['c_number']}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">开票金额</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['pt_money']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">业务佣金</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['money']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">技术服务费</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['service_money']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业支付技术服务费</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['business_pay']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创客支付技术服务费</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['member_pay']}">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">服务类型</label>
+            <div class="col-sm-6">
+                <input  type="text" class="form-control" readonly name="title" required value="{if $achievement['invoice_type']==1}众包{else}委托{/if}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">会计科目</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['accounting_subjects']}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">二级科目</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['accounting_subjects_son']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业名称</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['bname']}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">企业税号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['taxpayer']}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">电话</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['business_mobile']}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">注册地址</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['address']}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">开户行</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['bank_address']}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">银行账号</label>
+            <div class="col-sm-6">
+                <input   type="text" class="form-control" readonly name="title" required value="{$achievement['card_number']}">
+            </div>
+        </div>
+    </div>
+
+    <!--endprint-->
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">付款凭证</label>
+            <div class="col-sm-8">
+
+                {if $achievement['payment_vouchers']}
+                <div class="col-sm-6">
+                    {foreach $achievement['payment_vouchers'] as  $key=>$v}
+                    <a href="__UPLOADS__/{$v}" download="下载">下载付款凭证{$key+1}</a>
+                    {/foreach}
+                </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">合同下载</label>
+            <div class="col-sm-8">
+
+                {if $achievement['fileUrl']}
+                <a href="{$achievement['fileUrl']}" download="下载">合同下载</a>
+
+                {/if}
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script type="text/javascript" src="__PLUGINS__/js/zoomify/zoomify.min.js"></script>
+<script>
+    function doPrint() {
+        bdhtml=window.document.body.innerHTML;
+        sprnstr="<!--startprint-->"; //开始打印标识字符串有17个字符
+        eprnstr="<!--endprint-->"; //结束打印标识字符串
+        prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17); //从开始打印标识之后的内容
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+        window.document.body.innerHTML=prnhtml; //把需要打印的指定内容赋给body.innerHTML
+        window.print(); //调用浏览器的打印功能打印指定区域
+        window.document.body.innerHTML=bdhtml; // 最后还原页面
+    }
+</script>
+<script>
+    var form,province,city,district;
+
+    layui.use(['laydate','form','layer','upload'],function () {
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+        var upload = layui.upload;
+        form = layui.form;
+        var loadding_index = '';
+        $('.pass').click(function () {
+            id = $(this).attr('data');
+            url = $(this).attr('data-url')
+            var index = layer.confirm('确认通过？', {
+                btn: ['确认','取消'] //按钮
+            }, function(){
+                layer.close(index)
+                $.post(url, {id:id}, function (response) {
+                    if (!response.code) {
+                        warning(response.msg)
+                    } else {
+                        success(response.msg)
+                        setTimeout(function(){
+                            window.location.href = response.url
+                        }, response.wait * 1000);
+                    }
+                })
+            });
+        });
+        $('.refuse').click(function () {
+            id = $(this).attr('data');
+            url = $(this).attr('data-url');
+            layer.prompt({
+                formType: 2,
+                value: '',
+                title: '请输入拒绝原因',
+                area: ['300px', '200px'] //自定义文本域宽高
+            }, function(value, index, elem){
+                alert(value); //得到value
+                layer.close(index);
+                $.post(url, {id:id,msg:value}, function (response) {
+                    if (!response.code) {
+                        warning(response.msg);
+                    } else {
+                        success(response.msg);
+                        setTimeout(function(){
+                            window.location.href = response.url
+                        }, response.wait * 1000);
+                    }
+                })
+            });
+        });
+
+
+
+        $('#icon_img').click(function () {
+            $('#icon_input').click();
+        });
+        $("#icon_input").on("change", function() {
+            var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+            if(objUrl) {
+                $("#icon_img").attr("src", objUrl); //将图片路径存入src中，显示出图片
+            }
+        });
+
+        $('#icon_img1').click(function () {
+            $('#icon_input1').click();
+        });
+        $("#icon_input1").on("change", function() {
+            var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+            if(objUrl) {
+                $("#icon_img1").attr("src", objUrl); //将图片路径存入src中，显示出图片
+            }
+        });
+
+        $('#icon_img2').click(function () {
+            $('#icon_input2').click();
+        });
+        $("#icon_input2").on("change", function() {
+            var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+            if(objUrl) {
+                $("#icon_img2").attr("src", objUrl); //将图片路径存入src中，显示出图片
+            }
+        });
+        function getObjectURL(file) {
+            var url = null;
+            if(window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if(window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if(window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    });
+</script>
+{/block}
+
+{block name="submit"}
+<button  onclick="doPrint()">打印</button>
+
+{/block}

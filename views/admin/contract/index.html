@@ -1,0 +1,353 @@
+{extend name="public:base" /}
+{block name="css"}
+<link href="__PLUGINS__/js/layui/css/layui.css" rel="stylesheet">
+<style>
+    td>img{
+        width:50px;
+        height:50px;
+    }
+    .form-search .layui-form-label{
+        width: auto;
+    }
+    .form-search button{
+        height: 38px;
+        margin-bottom: 5px;
+    }
+    .layui-form-item .layui-input-inline{
+        width: 150px;
+    }
+     .layui-form-select{
+        width: 10% !important;
+        float:left !important;
+         margin-right:10px !important;
+    }
+</style>
+<!--loading进度条-->
+<div class="layui-progress" lay-filter="demo" style="display:none;">
+    <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+</div>
+{/block}
+{block name="search"}
+<div class="layui-form form-search">
+    <input type="text" name="keyword"  autocomplete="off" class="layui-input" style="width: 35%;float:left;margin-right: 10px;" placeholder="请输入合同编号、业务单号、企业名称、创客姓名的关键字" value="{$Request.param.keyword}">
+    <select name="type" lay-verify="required">
+        <option value="">合同状态(全部)</option>
+        <option value="1">签署完成</option>
+        <option value="2">未签署完成</option>
+    </select>
+    {:searchButton('查询')}
+    <button type="button" id="addcontract" class="layui-btn layui-btn-primary layui-btn-sm" data-type="loading">上传合同模板</button>
+    <!--<button type="button" id="addseal" class="layui-btn layui-btn-primary layui-btn-sm" data-type="loading">生成电子公章</button>-->
+    <button type="button" id="addentrust" class="layui-btn layui-btn-primary layui-btn-sm" data-type="loading">创客委托书</button>
+</div>
+{/block}
+{block name="menu"}合同管理{/block}
+{block name="table-head"}
+   <tr>
+        <th>合同编号</th>
+        <th>所属业务单号</th>
+        <th>企业名称</th>
+        <th>创客姓名</th>
+        <th>合同状态</th>
+        <th>操作</th>
+    </tr>
+{/block}
+
+{block name="table-body"}
+
+{if condition="!$contract->count()"}
+<tr>
+    <td colspan="10" class="text-center">没有数据</td>
+</tr>
+{else/}
+{foreach $contract as $key => $banner}
+<tr>
+    <td class="contract" data-flowid="{$banner->flowid}" style="color:#01AAED;cursor:pointer;">{$banner->number}</td>
+    <td>{$banner->task_number}</td>
+    <td>{$banner->business_name}</td>
+    <td>{$banner->name}</td>
+    <td>
+        {if $banner->nail_status==0}
+            甲方待签
+        {elseif $banner->nail_status==1}
+            甲方已签
+        {/if}
+        {if $banner->second_status==0}
+            乙方待签
+        {elseif $banner->second_status==1}
+            乙方已签
+        {/if}
+        {if $banner->over_status==0}
+        丙方待签
+        {elseif $banner->over_status==1}
+        丙方已签
+        {/if}
+    </td>
+    <td>
+        {if $banner->over_status==0}
+             <a href="{$banner->over_contract_address}" target="_blank" style="color:#01AAED;">签署合同</a>
+        {elseif $banner->over_status==1}
+            <a href="" target="_blank" style="color:#DDD;">签署合同</a>
+        {/if}
+    </td>
+</tr>
+{/foreach}
+{/if}
+<script type="text/javascript" src="__PLUGINS__/js/layui/layui.js"></script>
+<script>
+    layui.use(['form','layer','upload','element'],function () {
+        var layer = layui.layer,form = layui.form,upload = layui.upload,element = layui.element;
+
+        //触发事件
+        var active = {
+            loading: function(othis){
+                var DISABLED = 'layui-btn-disabled';
+                if(othis.hasClass(DISABLED)) return;
+
+                //模拟loading
+                var n = 0, timer = setInterval(function(){
+                    n = n + Math.random()*10|0;
+                    if(n>100){
+                        n = 100;
+                        clearInterval(timer);
+                        othis.removeClass(DISABLED);
+                    }
+                    element.progress('demo', n+'%');
+                }, 300+Math.random()*1000);
+
+                othis.addClass(DISABLED);
+            }
+        };
+
+        $('.pass').click(function () {
+            id = $(this).attr('data');
+            url = $(this).attr('data-url')
+            var index = layer.confirm('确认通过？', {
+                btn: ['确认','取消'] //按钮
+            }, function(){
+                layer.close(index)
+                $.post(url, {id:id}, function (response) {
+                    if (!response.code) {
+                        warning(response.msg)
+                    } else {
+                        success(response.msg)
+                        setTimeout(function(){
+                            window.location.href = response.url
+                        }, response.wait * 1000);
+                    }
+                })
+            });
+        })
+        $('.refuse').click(function () {
+            id = $(this).attr('data');
+            url = $(this).attr('data-url');
+            layer.prompt({
+                formType: 2,
+                value: '',
+                title: '请输入拒绝理由',
+                area: ['300px', '200px'] //自定义文本域宽高
+            }, function(value, index, elem){
+                layer.close(index);
+                $.post(url, {id:id,msg:value}, function (response) {
+                    if (!response.code) {
+                        warning(response.msg);
+                    } else {
+                        success(response.msg);
+                        setTimeout(function(){
+                            window.location.href = response.url
+                        }, response.wait * 1000);
+                    }
+                })
+            });
+
+        })
+
+        //上传合同模板
+        var addcontract = upload.render({
+            elem: '#addcontract' //绑定元素
+            ,url: '/admin/contract/createcontract' //上传接口
+            ,accept: 'file' //允许上传的文件类型
+            ,before: function(obj){
+                $(".layui-progress").show(); //loading进度条显示
+                var othis = $('#addcontract'), type = $('#addcontract').data('type');
+                active[type] ? active[type].call(this, othis) : '';
+            }
+            ,done: function(response){
+                $('#addcontract').removeClass('layui-btn-disabled');
+                $(".layui-progress").css("display","none");  //loading进度条隐藏
+                element.progress('demo', '0%');
+                if (!response.code) {
+                    warning(response.msg);
+                }else{
+                    success(response.msg);
+                }
+            }
+            ,error: function(){
+                //请求异常回调
+            }
+        });
+        //上传委托书模板
+        var addentrust = upload.render({
+            elem: '#addentrust' //绑定元素
+            ,url: '/admin/contract/createentrust' //上传接口
+            ,accept: 'file' //允许上传的文件类型
+            ,before: function(obj){
+                $(".layui-progress").show(); //loading进度条显示
+                var othis = $('#addentrust'), type = $('#addentrust').data('type');
+                active[type] ? active[type].call(this, othis) : '';
+            }
+            ,done: function(response){
+                $('#addentrust').removeClass('layui-btn-disabled');
+                $(".layui-progress").css("display","none");  //loading进度条隐藏
+                element.progress('demo', '0%');
+                if (!response.code) {
+                    warning(response.msg);
+                }else{
+                    success(response.msg);
+                }
+            }
+            ,error: function(){
+                //请求异常回调
+            }
+        });
+        //生成电子公章
+        $('#addseal').click(function(){
+            $(".layui-progress").show(); //loading进度条显示
+            var othis = $(this), type = $(this).data('type');
+            active[type] ? active[type].call(this, othis) : '';
+            $.ajax({
+                type: 'post',
+                url: '/admin/contract/createseal',
+                data: {
+                    type:''
+                },
+                success: function(response){
+                    othis.removeClass('layui-btn-disabled');
+                    $(".layui-progress").css("display","none");  //loading进度条隐藏
+                    element.progress('demo', '0%');
+                    if (!response.code) {
+                        warning(response.msg);
+                    }else{
+                        success(response.msg);
+                    }
+                }
+            });
+        });
+        //查看合同正文
+        $('.contract').click(function(){
+           var dataFlowid = $(this).attr("data-flowid");
+            $.ajax({
+                type: 'post',
+                url: '/admin/contract/getdocuments',
+                data: {
+                    flowid:dataFlowid
+                },
+                success: function(response){
+                    if (!response.code) {
+                        warning(response.msg);
+                    }else{
+                        window.location.href=response.data;
+                    }
+                }
+            });
+        });
+
+        var form,province,city,district;
+        var select_province = '{$Request.param.province}';
+        var select_city = '{$Request.param.city}';
+        var select_district = '{$Request.param.district}';
+        var is_first_select = true;
+        //获取地区数据
+        $.get("__JSON__/district.json",function(data){
+            province = data.result[0];
+            city = data.result[1];
+            district = data.result[2];
+            get_province();
+        });
+        //省份切换事件
+        form.on('select(province)',function (data) {
+            var id = $(data.elem).find("option:selected").attr("data-id");
+            if(id == undefined){
+                $("#city").html('');
+                $("#district").html('');
+                form.render('select');
+                return ;
+            }
+            toggle_province($('#province option:selected').data('id'));
+        });
+        //城市切换事件
+        form.on('select(city)',function (data) {
+            var id = $(data.elem).find("option:selected").attr("data-id");
+            var provinceid = $(data.elem).find("option:selected").attr("data-provinceid");
+            toggle_city(id,provinceid);
+        });
+        //获取省份
+        function get_province(){
+            let select_index = 0;
+            for (let x in province) {
+                let selected = '';
+                if(is_first_select && province[x].fullname == select_province){
+                    selected = 'selected';
+                    select_index = x;
+                }
+                $("#province").append('<option ' + selected + ' data-id="' + x + '" value="' + province[x].fullname + '">' + province[x].fullname + '</option>');
+            }
+            form.render('select');
+            if(select_province != ''){
+                toggle_province(select_index);
+            }
+        }
+        //切换省份
+        function toggle_province(id) {
+            $("#city").html('');
+            $("#district").html('');
+            let i = province[id].cidx[0];
+            if(!city[i].hasOwnProperty('cidx')){
+                $("#city").append('<option data-id = "-1" data-provinceid="' + i + '"  value="' + province[id].fullname + '">' + province[id].fullname + '</option>');
+                toggle_city("-1",id);
+                return ;
+            }
+            let select_index = i;
+            for(;i<=province[id].cidx[1];i++){
+                let selected = '';
+                if(is_first_select &&  city[i].fullname == select_city){
+                    selected = 'selected';
+                    select_index = i;
+                }
+                $("#city").append('<option ' + selected + ' data-id="' + i + '"  value="' + city[i].fullname + '">' + city[i].fullname + '</option>');
+            }
+            toggle_city(select_index);
+            form.render('select');
+        }
+        //切换市区
+        function toggle_city(id,provinceid) {
+            $("#district").html('');
+            if(id == "-1"){
+                let i = province[provinceid].cidx[0];
+                for(;i<=province[provinceid].cidx[1];i++){
+                    let selected = '';
+                    if(is_first_select &&  city[i].fullname == select_district){
+                        selected = 'selected';
+                    }
+                    $("#district").append('<option ' + selected + ' data-id="' + i + '"  value="' + city[i].fullname + '">' + city[i].fullname + '</option>');
+                }
+            }else{
+                let i = city[id].cidx[0];
+                for(;i<=city[id].cidx[1];i++){
+                    let selected = '';
+                    if(is_first_select &&  district[i].fullname == select_district){
+                        selected = 'selected';
+                    }
+                    $("#district").append('<option ' + selected + ' data-id="' + i + '"  value="' + district[i].fullname + '">' + district[i].fullname + '</option>');
+                }
+            }
+            is_first_select = false;
+            form.render('select');
+        }
+    });
+</script>
+{/block}
+{block name="paginate"}
+{$contract->render()|raw}
+
+{/block}
